@@ -12,17 +12,9 @@ app.set("view engine","ejs");
 
 
 
-
-
-
-
-
-
-
 app.get("/",(req,res)=>{
     res.sendFile(__dirname + "/public/main.html");
 });
-
 
 
 app.get("/searchResult",(req,res)=>{
