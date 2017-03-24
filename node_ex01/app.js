@@ -4,9 +4,14 @@
 
 
 var express = require('express');
-var app = express();
-
 var bodyParser = require('body-parser');
+var app = express();
+var main = require("./router/main");
+
+
+//main에 대한 라우터는 "main" 이 router 하는 것.
+app.use("/main",main);
+
 
 
 app.use(express.static('public'));
@@ -39,12 +44,6 @@ app.get('/',(req,res)=>{
 });
 
 
-//서버에서도 비동기로 해당 경로로 들어오길 기다리고 있다
-app.get('/main',(req,res)=>{
-    res.sendFile(__dirname + "/public/src/html/service.html");
-});
-
-
 
 app.get('/login',(req,res)=>{
 
@@ -61,4 +60,3 @@ app.post('/email_post',(req,res)=>{
 
     res.render('email.ejs', {'email' : body.emailId});
 });
-
