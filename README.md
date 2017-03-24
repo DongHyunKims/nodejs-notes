@@ -92,42 +92,60 @@
 
   - main.js
   ~~~
-  /* 
-  ./router/main.js
-  "/main" 경로로 들어오는 routing
-  */
+    /*
+    ./router/main.js
+    "/main" 경로로 들어오는 routing
+    */
 
-  var express = require("express");
-  var app = express();
+    var express = require("express");
+    var app = express();
+    var path = require("path");
+    //express 하단의 Router 라는 메소드를 실핸 시킨다.
+    var router = express.Router();
 
-  //express 하단의 Router 라는 메소드를 실핸 시킨다.
-  var router = express.Router();
+    // 이미 app에서 /main으로 라우팅 되어 들어왔기 때문에 루트만 써줘도 "http://localhost:3000/main" 으로 처리된 것이다.
+    router.get('/',(req,res)=&gt;{
+      // tip. 상대 경로를 사용하기 위해 path.join을 사용하여 현재 경로와 두번째 인자의 경로를 합쳐 상대경로로 인식하게 한다.
+      res.sendFile(path.join(__dirname + "../public/src/html/service.html"));
+      });
 
-  // 이미 app에서 /main으로 라우팅 되어 들어왔기 때문에 루트만 써줘도 "http://localhost:3000/main" 으로 처리된 것이다.
-  router.get('/',(req,res)=&gt;{
-    res.sendFile(__dirname + "/public/src/html/service.html");
-    });
-
-    //외부에서도 사용할수 있도록 router를 export 해준다.
-    module.exports = router;
+      //외부에서도 사용할수 있도록 router를 export 해준다.
+      module.exports = router;
   ~~~
-
-
   - app.js
   ~~~
-    // app.js
-    var express = require('express');
+      // app.js
+      var express = require('express');
 
-    var app = express();
+      var app = express();
 
-    //main router 모듈
-    var main = require("./router/main");
+      //main router 모듈
+      var main = require("./router/main");
 
-    //"/main" 경로에 대한 routing 처리를 main 모듈에 위임.
-    app.use("/main",main);
+      //"/main" 경로에 대한 routing 처리를 main 모듈에 위임.
+      app.use("/main",main);
   ~~~
 
 
+- 라우팅에 대한 처리가 많아지면 app.js의 규모가 커지기 때문에 중간에서 모든 라우팅 처리를 할수 있는 미들웨어를 만드는 것이 좋다.
+- 모든 라우팅 처리를 미들웨어를 통해 수행한다.
+~~~
+  var express = require("express");
+  var app = express();
+  var main = require("./main");
+  var email = require("./email");
+  var router = express.Router();
+  var path = require("path");
+
+  //루트 이후의 라우팅 처리를 수행한다.
+  router.use("/main",main);
+  router.use("/email",main);
+
+  router.get('/',(req,res)=>{
+      res.sendFile(path.join(__dirname ,"../public/src/html/service.html"));
+  });
+  module.exports = router;
+~~~
 
 
 

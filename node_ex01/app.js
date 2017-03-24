@@ -6,12 +6,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
+var router = require('./router/index');
 var main = require("./router/main");
+var email = require("./router/emial");
 
 
 //main에 대한 라우터는 "main" 이 router 하는 것.
 app.use("/main",main);
 
+app.use("/email",main);
+
+app.use(router);
 
 
 app.use(express.static('public'));
@@ -33,30 +38,4 @@ app.set('view engine', 'ejs');
 //3000 포트를 기반으로 콜백함수를 실행 시켜준다
 app.listen(3000, function(){
     console.log("start server!! port 3000");
-});
-
-
-app.get('/',(req,res)=>{
-   // res.send("<h1>hi firends!!!!</h1>");
-
-    //
-    res.sendFile(__dirname + "/public/src/html/service.html");
-});
-
-
-
-app.get('/login',(req,res)=>{
-
-    res.sendFile(__dirname + "/public/src/html/form.html")
-});
-
-
-app.post('/email_post',(req,res)=>{
-
-    //req.body는 input 태그의 name 과 val값을 {}객체 형태로 만들어 준다
-    console.log(req.body);
-    let body = req.body;
-    //res.send("<h2>welcome " + body.emailId);
-
-    res.render('email.ejs', {'email' : body.emailId});
 });
