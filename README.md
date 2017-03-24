@@ -62,6 +62,8 @@
 > post의 데이터를 받을수 있도록 만드는 모듈, post는 정보를 body안에 넣어 오기 때문에 body안의 정보를 body-parser을 통해 바꾸어준다.<br>
 > app.use(bodyParser.urlencoded({extended : true})); 을 통해 url인코딩을 계속 적용 할수 있다.<br>
 > req.body는 input 태그의 name 과 val값을 {}객체 형태로 받아온다
+> body-parser를 통해 json을 해석한다.<br>
+> get으로는 json형태로 보내는데 무리가 있다.<br>
 
 - view engine
 > node.js의 view engine을 통해 클라이언트로 응답을 보낼 때 적절한 데이터를 넣어서 보내줄수 있다.<br>
@@ -82,15 +84,56 @@
 - node.js 라우팅 처리
 > 여러가지 라우팅 처리를 다른 파일로 모듈화 하여 관리하면 좋다
   1. router 폴더를 만든다.
-  2. routing 원하는 파일을 만든후 express의 Router() 메소드를 통하여 router를 만든다.
+  2. routing 원하는 부분을 모듈화 후 express의 Router() 메소드를 통하여 router를 만든다.
   3. app을 통해서 수행 했던 routing 처리를 router를 통해 처리 한다.
   4. router 객체를 외부에서 사용 할 수 있도록 exprort해준다.
   5. app.js 에서 라우팅 할 파일을 require 해준다.
   6. `app.use()`를 통해 routing 할 router 파일을 경로와 함께 등록한다.
 
   - main.js
-<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px; border-right:2px solid #4f4f4f"><div style="margin:0; padding:0; word-break:normal; text-align:right; color:#aaa; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="line-height:130%">1</div><div style="line-height:130%">2</div><div style="line-height:130%">3</div><div style="line-height:130%">4</div><div style="line-height:130%">5</div><div style="line-height:130%">6</div><div style="line-height:130%">7</div><div style="line-height:130%">8</div><div style="line-height:130%">9</div><div style="line-height:130%">10</div><div style="line-height:130%">11</div><div style="line-height:130%">12</div><div style="line-height:130%">13</div><div style="line-height:130%">14</div><div style="line-height:130%">15</div><div style="line-height:130%">16</div><div style="line-height:130%">17</div><div style="line-height:130%">18</div></div></td><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">/*&nbsp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">./router/main.js&nbsp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">"/main"&nbsp;경로로&nbsp;들어오는&nbsp;routing&nbsp;</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">*/</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;express&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;require(<span style="color:#ffd500">"express"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;app&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;express();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//express&nbsp;하단의&nbsp;Router&nbsp;라는&nbsp;메소드를&nbsp;실핸&nbsp;시킨다.</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;router&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;express.Router();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//&nbsp;이미&nbsp;app에서&nbsp;/main으로&nbsp;라우팅&nbsp;되어&nbsp;들어왔기&nbsp;때문에&nbsp;루트만&nbsp;써줘도&nbsp;"http://localhost:3000/main"&nbsp;으로&nbsp;처리된&nbsp;것이다.</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">router.get(<span style="color:#ffd500">'/'</span>,(req,res)<span style="color:#0086b3"></span><span style="color:#ff3399">=</span><span style="color:#0086b3"></span><span style="color:#ff3399">&amp;</span>gt;{</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;&nbsp;&nbsp;&nbsp;res.sendFile(__dirname&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">+</span>&nbsp;<span style="color:#ffd500">"/public/src/html/service.html"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">});&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//외부에서도&nbsp;사용할수&nbsp;있도록&nbsp;router를&nbsp;export&nbsp;해준다.</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">module.exports&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;router;&nbsp;</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
-<br>
+  ~~~
+  /* 
+  ./router/main.js
+  "/main" 경로로 들어오는 routing
+  */
+
+  var express = require("express");
+  var app = express();
+
+  //express 하단의 Router 라는 메소드를 실핸 시킨다.
+  var router = express.Router();
+
+  // 이미 app에서 /main으로 라우팅 되어 들어왔기 때문에 루트만 써줘도 "http://localhost:3000/main" 으로 처리된 것이다.
+  router.get('/',(req,res)=&gt;{
+    res.sendFile(__dirname + "/public/src/html/service.html");
+    });
+
+    //외부에서도 사용할수 있도록 router를 export 해준다.
+    module.exports = router;
+  ~~~
+
 
   - app.js
-<div class="colorscripter-code" style="color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; position:relative !important; overflow:auto"><table class="colorscripter-code-table" style="margin:0; padding:0; border:none; background-color:#272727; border-radius:4px;" cellspacing="0" cellpadding="0"><tr><td style="padding:6px; border-right:2px solid #4f4f4f"><div style="margin:0; padding:0; word-break:normal; text-align:right; color:#aaa; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="line-height:130%">1</div><div style="line-height:130%">2</div><div style="line-height:130%">3</div><div style="line-height:130%">4</div><div style="line-height:130%">5</div><div style="line-height:130%">6</div><div style="line-height:130%">7</div><div style="line-height:130%">8</div><div style="line-height:130%">9</div><div style="line-height:130%">10</div><div style="line-height:130%">11</div><div style="line-height:130%">12</div></div></td><td style="padding:6px 0"><div style="margin:0; padding:0; color:#f0f0f0; font-family:Consolas, 'Liberation Mono', Menlo, Courier, monospace !important; line-height:130%"><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//&nbsp;app.js</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;express&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;require(<span style="color:#ffd500">'express'</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;app&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;express();</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//main&nbsp;router&nbsp;모듈</span></div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#ff3399">var</span>&nbsp;main&nbsp;<span style="color:#0086b3"></span><span style="color:#ff3399">=</span>&nbsp;require(<span style="color:#ffd500">"./router/main"</span>);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%"><span style="color:#999999">//"/main"&nbsp;경로에&nbsp;대한&nbsp;routing&nbsp;처리를&nbsp;main&nbsp;모듈에&nbsp;위임.</span></div><div style="padding:0 6px; white-space:pre; line-height:130%">app.use(<span style="color:#ffd500">"/main"</span>,main);</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div><div style="padding:0 6px; white-space:pre; line-height:130%">&nbsp;</div></div><div style="text-align:right; margin-top:-13px; margin-right:5px; font-size:9px; font-style:italic"><a href="http://colorscripter.com/info#e" target="_blank" style="color:#4f4f4f; text-decoration:none">Colored by Color Scripter</a></div></td><td style="vertical-align:bottom; padding:0 2px 4px 0"><a href="http://colorscripter.com/info#e" target="_blank" style="text-decoration:none; color:white"><span style="font-size:9px; word-break:normal; background-color:#4f4f4f; color:white; border-radius:10px; padding:1px">cs</span></a></td></tr></table></div>
+  ~~~
+    // app.js
+    var express = require('express');
+
+    var app = express();
+
+    //main router 모듈
+    var main = require("./router/main");
+
+    //"/main" 경로에 대한 routing 처리를 main 모듈에 위임.
+    app.use("/main",main);
+  ~~~
+
+
+
+
+
+
+
+
+#### RESTFULL API
+
+- ajax를 통해 클라이언트가 서버를 보낼 때 json 형태로 보낼 수 있다. key와 value된 object를 만들어 보낼 수 있다.
