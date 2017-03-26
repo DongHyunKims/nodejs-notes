@@ -92,7 +92,7 @@
     var router = express.Router();
 
     // 이미 app에서 /main으로 라우팅 되어 들어왔기 때문에 루트만 써줘도 "http://localhost:3000/main" 으로 처리된 것이다.
-    router.get('/',(req,res)=&gt;{
+    router.get('/',(req,res)=>{
       // tip. 상대 경로를 사용하기 위해 path.join을 사용하여 현재 경로와 두번째 인자의 경로를 합쳐 상대경로로 인식하게 한다.
       res.sendFile(path.join(__dirname + "../public/src/html/service.html"));
       });
