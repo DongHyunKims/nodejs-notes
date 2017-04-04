@@ -79,7 +79,7 @@ app.post('/cool-profile', cpUpload, function (req, res, next) {
 
 #### 4. multer 심화
 - file infomation 확인
-> <img src="../images/multer_file_info.png"/>
+> <img src="../images/multer_file_info.png" width="500"/>
 - 파일을 dest로 설정한 경로에 저장시 이름은 랜덤한 값으로 저장 된다. file information의 filename 확인.
 - dest 보다 복잡한 처리를 하고 싶다면 key의 값을 storage로 변경 한다.
 - multer의 diskStorage 메소드를 호출하면 storage객체를 리턴 할 것이다.
@@ -128,7 +128,6 @@ var upload = multer({ storage: storage })
 </body>
 </html>
 ~~~
-<br>
 - javascript
 ~~~Javascript
 (function(){  
@@ -163,7 +162,6 @@ function runAjaxData (reqListener, method, url, data, contentType){
      xhr.addEventListener("load", reqListener);
 }
 ~~~
-<br>
 - node.js
 ~~~Javascript
 var multer = require("multer");
