@@ -176,7 +176,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 
-router.post("/insertBoard",upload.single('inputFile'),function(req,res){
+router.post("/ex",upload.single('inputFile'),function(req,res){
         // 전송된 텍스트 데이터 확인
         let data = req.body;
         // 전송된 파일 데이터 확인
